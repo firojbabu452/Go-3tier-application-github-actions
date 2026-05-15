@@ -2,8 +2,8 @@ name: TWS CD workflow
 
 on:
   workflow_run:
-       workflows: ["Ci Workflow"]
-       types: [completed]
+    workflows: ["Ci Workflow"]
+    types: [completed]
 
 jobs:
   deploy:
@@ -17,9 +17,12 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT }}
           script: |
             cd ~/Go-3tier-application-github-actions
             git pull origin main
             docker-compose pull
             docker-compose up -d
+          timeout: 30s
+          command_timeout: 10m
+          proxy_port: 22
+          proxy_timeout: 30s
