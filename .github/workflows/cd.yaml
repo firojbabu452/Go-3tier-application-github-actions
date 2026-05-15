@@ -1,0 +1,25 @@
+name: TWS CD workflow
+
+on:
+  workflow_run:
+       workflows: ["Ci Workflow"]
+       types: [completed]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd ~/Go-3tier-application-github-actions
+            git pull origin main
+            docker-compose pull
+            docker-compose up -d
