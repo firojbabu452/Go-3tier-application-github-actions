@@ -15,11 +15,10 @@ services:
     networks:
       - skillpulse
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
       interval: 10s
       timeout: 5s
       retries: 10
-      start_period: 30s
     
   backend:
     image: ${DOCKERHUB_USERNAME}/skillpulse-backend:latest
