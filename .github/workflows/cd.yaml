@@ -1,4 +1,4 @@
-name: TWS CD workflow
+name: MY CD workflow
 
 on:
   workflow_run:
